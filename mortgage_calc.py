@@ -6,22 +6,22 @@ class Installment():
         self.installment = principal + interest
 
     def __str__(self):
-        return f'{self.no} {self.principal} {self.interest} {self.installment}'
+        return f'{self.no}\t{self.principal:.2f}\t{self.interest:.2f}\t{self.installment:.2f}'
 
 class Calculator():
-    def __init__(self, loan_amount, years, interest, is_decreasing):
+    def __init__(self, loan_amount, years, k, interest, is_decreasing):
         self.loan_amount = loan_amount
         self.years = years
+        self.k = k
         self.interest = interest
         self.is_decreasing = is_decreasing
 
     def calc_equal(self):
-        n = self.years * 12
+        n = self.years * k
         installment = (self.loan_amount * self.interest) \
-                    / (12 * (1 - (12/(12 + self.interest)) ** n))
-        print(installment)
+                    / (k * (1 - (k/(k + self.interest)) ** n))
         ratio = 1 + self.interest / n
-        interest = (self.interest / 12) * self.loan_amount
+        interest = (self.interest / k) * self.loan_amount
         principal = installment - interest
         installments = [Installment(1, principal, interest)]
         for i in range(2, n+1):
@@ -42,7 +42,7 @@ class Calculator():
             return self.calc_equal()
 
 if __name__ == "__main__":
-    loan_amount = int(input("How much do you want to borrow? "))
+    loan_amount = float(input("How much do you want to borrow? "))
     years = int(input("For how many years? "))
     k = int(input("Number of installments per year: "))
     interest = float(input("What is the interest rate (%)? ")) / 100
@@ -56,12 +56,10 @@ if __name__ == "__main__":
             3) Subtract commission fee from your credit payment
             4) Pay commission fee upfront
             (1/2/3/4): """))
-    print(f"commission_type: {commission_type}")
 
     credit_payment = loan_amount
     fixed_fee = commission * loan_amount
 
-    print(f"fixed fee: {fixed_fee}")
     if commission_type == 1:
         fixed_fee = 0
     elif commission_type == 2:
@@ -69,8 +67,14 @@ if __name__ == "__main__":
     elif commission_type == 3:
         credit_payment -= fixed_fee
 
-    calc = Calculator(loan_amount, years, interest, is_decreasing)
+    calc = Calculator(loan_amount, years, k, interest, is_decreasing)
     (installments, total_interest) = calc.calculate()
+
+    print("No.  Principal  Interest  Installment")
     for i in installments:
         print(str(i))
-    print(total_interest)
+
+    print(f"Total credit granted: {loan_amount:.2f}")
+    print(f"Total credit payment: {credit_payment:.2f}")
+    print(f"Total interest to pay: {total_interest:.2f}")
+    print(f"Commission fee: {fixed_fee:.2f}")
