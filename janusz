@@ -1,9 +1,4 @@
-How much do you want to borrow? For how many years? Number of installments per year: What is the interest rate (%)? Equal or decreasing installments? (e/d) What is the commission fee(%)? Do you want to:
-            1) Ignore commission fee
-            2) Add commission fee to your loan amount
-            3) Subtract commission fee from your credit payment
-            4) Pay commission fee upfront
-            (1/2/3/4): No.  Principal  Interest  Installment
+No.  Principal  Interest  Installment
 1	1226.94	1332.46	2559.41
 2	1226.94	1328.76	2555.70
 3	1226.94	1325.06	2552.00
