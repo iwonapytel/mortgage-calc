@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class Installment():
     def __init__(self, no, principal, interest):
         self.no = no
@@ -33,7 +35,20 @@ class Calculator():
         return (installments, total_interest)
 
     def calc_decreasing(self):
-        pass
+        n = self.years * k
+        principal = loan_amount / n
+        total_interest = 0.
+        amount_left = loan_amount
+
+        installments = []
+
+        for i in range(1, n + 1):
+            interest = amount_left * (self.interest / k)
+            total_interest += interest
+            installments.append(Installment(i, principal, interest))
+            amount_left -= principal
+
+        return (installments, total_interest)
 
     def calculate(self):
         if self.is_decreasing:
@@ -52,7 +67,7 @@ if __name__ == "__main__":
     commission_type = int(input(
         """Do you want to:
             1) Ignore commission fee
-            2) Add commission fee to your credit payment
+            2) Add commission fee to your loan amount
             3) Subtract commission fee from your credit payment
             4) Pay commission fee upfront
             (1/2/3/4): """))
